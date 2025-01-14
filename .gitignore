@@ -1,0 +1,22 @@
+# Entorno virtual
+venv/
+*.pyc
+__pycache__/
+
+# Archivos de logs
+logs/
+*.log
+
+# Configuración de IDE
+.vscode/
+.idea/
+
+# Archivos generados automáticamente
+*.pkl
+*.pth
+
+# Archivos temporales
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
