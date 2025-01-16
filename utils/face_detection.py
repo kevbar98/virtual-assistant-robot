@@ -10,12 +10,16 @@ from utils.audio_output import play_audio
 from utils.messages import get_new_person_message, get_welcome_back_message
 from utils.logger import log_detection, log_exception
 from config import GENERATE_DEBUG_IMAGES, LOG_DETECTIONS_TO_CSV
+import time
 
 # Registro temporal para la sesión actual
 session_detected_faces = set()
 
 # Inicializar el detector MTCNN
 mtcnn_detector = MTCNN()
+
+# Variable global para controlar la detección de rostros
+detection_blocked = False
 
 def init_database():
     """Inicializa la base de datos SQLite."""
@@ -52,8 +56,13 @@ def detect_and_save_faces(frame):
         Frame con los rostros detectados marcados.
     """
     global session_detected_faces
+    global detection_blocked  # Variable global de bloqueo de detección
 
     try:
+        # Si la detección está bloqueada, simplemente devolvemos el frame sin procesar
+        if detection_blocked:
+            return frame
+
         # Detectar rostros utilizando MTCNN
         faces = mtcnn_detector.detect_faces(frame)
 
@@ -123,6 +132,13 @@ def detect_and_save_faces(frame):
                             print("Persona nueva detectada.")
                             play_audio(get_new_person_message())
                             save_new_face(face_id, embedding)
+
+                            # Bloquear la detección después de identificar la persona
+                            detection_blocked = True
+
+                            # Esperar un tiempo (ejemplo: 5 segundos) para reactivar la detección
+                            time.sleep(10)  # Esperar 2 segundos para terminar el audio y permitir nueva detección
+                            detection_blocked = False  # Reanudar la detección después de 2 segundos
                         else:
                             print("Persona conocida detectada.")
                             play_audio(get_welcome_back_message())
