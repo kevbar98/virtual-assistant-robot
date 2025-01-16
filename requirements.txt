@@ -1,5 +1,9 @@
-torch
-torchvision
 opencv-python
 pyttsx3
-facenet-pytorch
+deepface
+tensorflow>=2.4.0,<2.19.0
+keras>=2.4.0
+Pillow
+numpy
+tf-keras
+mtcnn

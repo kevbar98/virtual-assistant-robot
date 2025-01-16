@@ -1,4 +1,4 @@
-import torch
+""" import torch
 from torchvision.models import vgg16
 
 class FaceTracker(torch.nn.Module):
@@ -27,8 +27,9 @@ class FaceTracker(torch.nn.Module):
         return class_out, bbox_out
 
 def load_model(model_path):
-    """Carga un modelo entrenado."""
+
     model = FaceTracker()
     model.load_state_dict(torch.load(model_path))
     model.eval()
     return model
+ """

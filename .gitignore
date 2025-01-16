@@ -14,6 +14,8 @@ logs/
 # Archivos generados automáticamente
 *.pkl
 *.pth
+*.jpg
+
 
 # Archivos temporales
 *.tmp
